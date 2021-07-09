@@ -34,7 +34,7 @@ func (s *Service) GetAccountBySignInID(signinID SignInID) (*Account, error) {
 	return s.accountRepo.GetAccountBySignInId(signinID)
 }
 
-func (s *Service) ValidateUserWithSignInID(signInID SignInID) error {
+func (s *Service) VerifyUserWithSignInIDExists(signInID SignInID) error {
 	_, err := s.GetAccountBySignInID(signInID)
 	return err
 }

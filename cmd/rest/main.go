@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	accountsRepo := inmem.NewAccountsStorage()
+	accountsRepo := inmem.NewAccountsStore()
 	plusMemberRepo := inmem.NewMembersStore()
 	plusSubscriptionRepo := inmem.NewSubscriptionsStore()
 

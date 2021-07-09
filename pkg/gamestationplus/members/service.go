@@ -8,7 +8,7 @@ type (
 	}
 
 	AccountService interface {
-		ValidateUserWithSignInID(signInID accounts.SignInID) error
+		VerifyUserWithSignInIDExists(signInID accounts.SignInID) error
 	}
 
 	Service struct {
@@ -25,7 +25,7 @@ func NewService(memberRepo Repository, accountsService AccountService) *Service 
 }
 
 func (s *Service) JoinToPlayStationPlus(newOnLineID OnlineID, networkSignInID accounts.SignInID) (*Member, error) {
-	err := s.accountService.ValidateUserWithSignInID(networkSignInID)
+	err := s.accountService.VerifyUserWithSignInIDExists(networkSignInID)
 	if err != nil {
 		return &Member{}, err
 	}

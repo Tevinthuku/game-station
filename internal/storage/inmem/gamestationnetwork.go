@@ -6,7 +6,7 @@ type AccountsStorage struct {
 	accounts []accounts.Account
 }
 
-func NewAccountsStorage() *AccountsStorage {
+func NewAccountsStore() *AccountsStorage {
 	return &AccountsStorage{}
 }
 

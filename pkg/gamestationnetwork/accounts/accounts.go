@@ -3,7 +3,7 @@ package accounts
 import "time"
 
 type (
-	DateOfBirth = time.Duration
+	DateOfBirth = time.Time
 	Email       = string
 	SignInID    (Email)
 	Account     struct {
