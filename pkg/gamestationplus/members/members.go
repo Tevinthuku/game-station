@@ -1,10 +1,12 @@
 package members
 
-import "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts"
+import (
+	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
+)
 
 type OnlineID string
 
 type Member struct {
 	OnlineID OnlineID
-	SignInID accounts.SignInID
+	SignInID entities.SignInID
 }
