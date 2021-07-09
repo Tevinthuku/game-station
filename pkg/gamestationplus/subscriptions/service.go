@@ -22,3 +22,15 @@ func NewService(subscriptionRepo Repository) *Service {
 		subscriptionRepo: subscriptionRepo,
 	}
 }
+
+func (ss *Service) AddSubscriptionToMember(subscription domain.Subscription, member memberdomain.Member) (*domain.Subscription, error) {
+	return ss.subscriptionRepo.AddSubscriptionToMember(subscription, member)
+}
+
+func (ss *Service) GetAllMemberSubscriptions(member memberdomain.Member) []*domain.MemberSubscription {
+	return ss.subscriptionRepo.GetAllMemberSubscriptions(member)
+}
+
+func (ss *Service) GetUnUsedSubscriptionFromCode(code domain.SubscriptionCode) (*domain.Subscription, error) {
+	return ss.subscriptionRepo.GetUnUsedSubscriptionFromCode(code)
+}
