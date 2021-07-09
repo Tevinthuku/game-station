@@ -2,15 +2,8 @@ package accounts
 
 import (
 	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
-	"github.com/pkg/errors"
 )
 
-var (
-	ErrSignInIdIsTaken = errors.New("the SignInID is already in use")
-	ErrUserNameIsTaken = errors.New("the username is already in use")
-
-	ErrNoAccountWithSignInIDFound = errors.New("no account found with specified signInID")
-)
 
 type (
 	Repository interface {

@@ -1,7 +1,6 @@
 package inmem
 
 import (
-	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts"
 	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
 )
 
@@ -16,10 +15,10 @@ func NewAccountsStore() *AccountsStorage {
 func (as *AccountsStorage) AddNewAccount(account domain.Account) (*domain.Account, error) {
 	for i := range as.accounts {
 		if as.accounts[i].SignInID == account.SignInID {
-			return &domain.Account{}, accounts.ErrSignInIdIsTaken
+			return &domain.Account{}, domain.ErrSignInIdIsTaken
 		}
 		if as.accounts[i].UserName == account.UserName {
-			return &domain.Account{}, accounts.ErrUserNameIsTaken
+			return &domain.Account{}, domain.ErrUserNameIsTaken
 		}
 	}
 	as.accounts = append(as.accounts, account)
@@ -32,5 +31,5 @@ func (as *AccountsStorage) GetAccountBySignInId(signInID domain.SignInID) (*doma
 			return &as.accounts[i], nil
 		}
 	}
-	return &domain.Account{}, accounts.ErrNoAccountWithSignInIDFound
+	return &domain.Account{}, domain.ErrNoAccountWithSignInIDFound
 }
