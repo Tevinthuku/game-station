@@ -3,16 +3,17 @@ package inmem
 import (
 	"time"
 
-	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/entities"
+	memberentities "github.com/Tevinthuku/game-station/pkg/gamestationplus/members/entities"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions"
+	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions/entities"
 )
 
 type storedAvailableSubscription struct {
-	subscriptions.Subscription
+	entities.Subscription
 	isAvailable bool
 }
 type SubscriptionStore struct {
-	membersubscriptions []subscriptions.MemberSubscription
+	membersubscriptions []entities.MemberSubscription
 	allSubscriptions    []storedAvailableSubscription
 }
 
@@ -20,8 +21,8 @@ func NewSubscriptionsStore() *SubscriptionStore {
 	return &SubscriptionStore{}
 }
 
-func (ss *SubscriptionStore) AddSubscriptionToMember(subscription subscriptions.Subscription, member entities.Member) (*subscriptions.Subscription, error) {
-	memberSubscription := subscriptions.MemberSubscription{
+func (ss *SubscriptionStore) AddSubscriptionToMember(subscription entities.Subscription, member memberentities.Member) (*entities.Subscription, error) {
+	memberSubscription := entities.MemberSubscription{
 		Code:       subscription.Code,
 		DateBought: time.Now(),
 		Duration:   subscription.Duration,
@@ -35,11 +36,11 @@ func (ss *SubscriptionStore) AddSubscriptionToMember(subscription subscriptions.
 		}
 	}
 
-	return &subscriptions.Subscription{}, subscriptions.ErrNoSubscriptionWithCodeFound
+	return &entities.Subscription{}, subscriptions.ErrNoSubscriptionWithCodeFound
 }
 
-func (ss *SubscriptionStore) GetAllMemberSubscriptions(member entities.Member) []*subscriptions.MemberSubscription {
-	memberSubscriptions := []*subscriptions.MemberSubscription{}
+func (ss *SubscriptionStore) GetAllMemberSubscriptions(member memberentities.Member) []*entities.MemberSubscription {
+	memberSubscriptions := []*entities.MemberSubscription{}
 	for i := range ss.membersubscriptions {
 		if ss.membersubscriptions[i].MemberID == member.OnlineID {
 			memberSubscriptions = append(memberSubscriptions, &ss.membersubscriptions[i])
@@ -48,11 +49,11 @@ func (ss *SubscriptionStore) GetAllMemberSubscriptions(member entities.Member) [
 	return memberSubscriptions
 }
 
-func (ss *SubscriptionStore) GetUnUsedSubscriptionFromCode(code subscriptions.SubscriptionCode) (*subscriptions.Subscription, error) {
+func (ss *SubscriptionStore) GetUnUsedSubscriptionFromCode(code entities.SubscriptionCode) (*entities.Subscription, error) {
 	for i := range ss.allSubscriptions {
 		if ss.allSubscriptions[i].isAvailable && ss.allSubscriptions[i].Code == code {
 			return &ss.allSubscriptions[i].Subscription, nil
 		}
 	}
-	return &subscriptions.Subscription{}, subscriptions.ErrNoSubscriptionWithCodeFound
+	return &entities.Subscription{}, subscriptions.ErrNoSubscriptionWithCodeFound
 }

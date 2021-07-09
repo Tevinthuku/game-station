@@ -1,4 +1,4 @@
-package subscriptions
+package entities
 
 import (
 	"time"
