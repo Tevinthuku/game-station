@@ -6,7 +6,7 @@ import (
 
 	"github.com/Tevinthuku/game-station/internal/storage/inmem"
 	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts"
-	networkentities "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
+	networkDomain "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
 
 	. "github.com/smartystreets/goconvey/convey"
@@ -18,8 +18,8 @@ func TestMemberService(t *testing.T) {
 	accountsRepo := inmem.NewAccountsStore()
 	accountsService := accounts.NewService(accountsRepo)
 	service := NewService(memberRepo, accountsService)
-	acc1 := networkentities.Account{
-		SignInID:    networkentities.SignInID("test@gamer.com"),
+	acc1 := networkDomain.Account{
+		SignInID:    networkDomain.SignInID("test@gamer.com"),
 		UserName:    "testgamer",
 		DateOfBirth: time.Date(1995, 12, 9, 0, 0, 0, 0, time.UTC), // TODO: Create a better abstraction for this
 	}
@@ -33,7 +33,7 @@ func TestMemberService(t *testing.T) {
 		})
 		Convey("it should not let the user join game station plus if the member's SignInID isnt registered on gamestation network", func() {
 			onlineID := domain.OnlineID("gamer2")
-			signInID := networkentities.SignInID("test2@gmail.com")
+			signInID := networkDomain.SignInID("test2@gmail.com")
 			_, err := service.JoinToPlayStationPlus(onlineID, signInID)
 			So(err, ShouldNotBeNil)
 		})

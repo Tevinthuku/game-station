@@ -1,19 +1,19 @@
 package members
 
 import (
-	networkentities "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
+	networkDomain "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
 )
 
 type (
 	Repository interface {
-		AddNewMember(newOnLineID domain.OnlineID, networkSignInID networkentities.SignInID) *domain.Member
+		AddNewMember(newOnLineID domain.OnlineID, networkSignInID networkDomain.SignInID) *domain.Member
 		GetMemberByOnlineID(onlineID domain.OnlineID) (*domain.Member, error)
-		GetMemberByNetworkSignInID(signinID networkentities.SignInID) (*domain.Member, error)
+		GetMemberByNetworkSignInID(signinID networkDomain.SignInID) (*domain.Member, error)
 	}
 
 	AccountService interface {
-		VerifyUserWithSignInIDExists(signInID networkentities.SignInID) (*networkentities.Account, error)
+		VerifyUserWithSignInIDExists(signInID networkDomain.SignInID) (*networkDomain.Account, error)
 	}
 
 	Service struct {
@@ -29,7 +29,7 @@ func NewService(memberRepo Repository, accountsService AccountService) *Service 
 	}
 }
 
-func (s *Service) JoinToPlayStationPlus(newOnLineID domain.OnlineID, networkSignInID networkentities.SignInID) (*domain.Member, error) {
+func (s *Service) JoinToPlayStationPlus(newOnLineID domain.OnlineID, networkSignInID networkDomain.SignInID) (*domain.Member, error) {
 	_, err := s.accountService.VerifyUserWithSignInIDExists(networkSignInID)
 	if err != nil {
 		return &domain.Member{}, err
@@ -53,7 +53,7 @@ func (s *Service) verifyOnlineIDIsAvailable(onlineID domain.OnlineID) error {
 	return domain.ErrOnlineIDIsTaken
 }
 
-func (s *Service) verifyNetworkSignInIDIsAvailable(networkSignInID networkentities.SignInID) error {
+func (s *Service) verifyNetworkSignInIDIsAvailable(networkSignInID networkDomain.SignInID) error {
 	_, err := s.memberRepo.GetMemberByNetworkSignInID(networkSignInID)
 	if err != nil {
 		return nil

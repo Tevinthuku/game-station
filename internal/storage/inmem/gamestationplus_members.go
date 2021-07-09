@@ -1,7 +1,7 @@
 package inmem
 
 import (
-	networkentities "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
+	networkDomain "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
 )
 
@@ -13,7 +13,7 @@ func NewMembersStore() *MembersStorage {
 	return &MembersStorage{}
 }
 
-func (ms *MembersStorage) AddNewMember(newOnLineID domain.OnlineID, networkSignInID networkentities.SignInID) *domain.Member {
+func (ms *MembersStorage) AddNewMember(newOnLineID domain.OnlineID, networkSignInID networkDomain.SignInID) *domain.Member {
 	member := domain.Member{
 		OnlineID: newOnLineID,
 		SignInID: networkSignInID,
@@ -33,7 +33,7 @@ func (ms *MembersStorage) GetMemberByOnlineID(onlineID domain.OnlineID) (*domain
 	return &domain.Member{}, domain.ErrMemberWithOnlineIDNotFound
 }
 
-func (ms *MembersStorage) GetMemberByNetworkSignInID(signInID networkentities.SignInID) (*domain.Member, error) {
+func (ms *MembersStorage) GetMemberByNetworkSignInID(signInID networkDomain.SignInID) (*domain.Member, error) {
 	for i := range ms.members {
 		if ms.members[i].SignInID == signInID {
 			return &ms.members[i], nil
