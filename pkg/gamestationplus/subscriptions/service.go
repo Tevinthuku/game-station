@@ -3,11 +3,6 @@ package subscriptions
 import (
 	memberdomain "github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions/domain"
-	"github.com/pkg/errors"
-)
-
-var (
-	ErrNoSubscriptionWithCodeFound = errors.New("no subscription found with specified subscription code")
 )
 
 type (

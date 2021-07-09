@@ -4,7 +4,6 @@ import (
 	"time"
 
 	memberdomain "github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
-	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions/domain"
 )
 
@@ -36,7 +35,7 @@ func (ss *SubscriptionStore) AddSubscriptionToMember(subscription domain.Subscri
 		}
 	}
 
-	return &domain.Subscription{}, subscriptions.ErrNoSubscriptionWithCodeFound
+	return &domain.Subscription{}, domain.ErrNoSubscriptionWithCodeFound
 }
 
 func (ss *SubscriptionStore) GetAllMemberSubscriptions(member memberdomain.Member) []*domain.MemberSubscription {
@@ -55,5 +54,5 @@ func (ss *SubscriptionStore) GetUnUsedSubscriptionFromCode(code domain.Subscript
 			return &ss.allSubscriptions[i].Subscription, nil
 		}
 	}
-	return &domain.Subscription{}, subscriptions.ErrNoSubscriptionWithCodeFound
+	return &domain.Subscription{}, domain.ErrNoSubscriptionWithCodeFound
 }

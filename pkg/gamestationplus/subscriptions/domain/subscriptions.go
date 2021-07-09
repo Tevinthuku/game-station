@@ -4,6 +4,11 @@ import (
 	"time"
 
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
+	"github.com/pkg/errors"
+)
+
+var (
+	ErrNoSubscriptionWithCodeFound = errors.New("no subscription found with specified subscription code")
 )
 
 type Duration (string)
