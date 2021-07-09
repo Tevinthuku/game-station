@@ -33,11 +33,6 @@ func (s *Service) CreateAccount(account entities.Account) (*entities.Account, er
 	return s.accountRepo.AddNewAccount(account)
 }
 
-func (s *Service) GetAccountBySignInID(signinID entities.SignInID) (*entities.Account, error) {
-	return s.accountRepo.GetAccountBySignInId(signinID)
-}
-
-func (s *Service) VerifyUserWithSignInIDExists(signInID entities.SignInID) error {
-	_, err := s.GetAccountBySignInID(signInID)
-	return err
+func (s *Service) VerifyUserWithSignInIDExists(signInID entities.SignInID) (*entities.Account, error) {
+	return s.accountRepo.GetAccountBySignInId(signInID)
 }
