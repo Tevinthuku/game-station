@@ -1,4 +1,4 @@
-package members
+package entities
 
 import (
 	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"

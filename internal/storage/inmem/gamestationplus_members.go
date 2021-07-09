@@ -1,20 +1,20 @@
 package inmem
 
 import (
-	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
-	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members"
+	networkentities "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
+	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/entities"
 )
 
 type MembersStorage struct {
-	members []members.Member
+	members []entities.Member
 }
 
 func NewMembersStore() *MembersStorage {
 	return &MembersStorage{}
 }
 
-func (ms *MembersStorage) AddNewMember(newOnLineID members.OnlineID, networkSignInID entities.SignInID) *members.Member {
-	member := members.Member{
+func (ms *MembersStorage) AddNewMember(newOnLineID entities.OnlineID, networkSignInID networkentities.SignInID) *entities.Member {
+	member := entities.Member{
 		OnlineID: newOnLineID,
 		SignInID: networkSignInID,
 	}

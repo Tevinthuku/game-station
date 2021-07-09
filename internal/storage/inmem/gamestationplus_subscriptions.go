@@ -3,7 +3,7 @@ package inmem
 import (
 	"time"
 
-	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members"
+	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/entities"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions"
 )
 
@@ -20,7 +20,7 @@ func NewSubscriptionsStore() *SubscriptionStore {
 	return &SubscriptionStore{}
 }
 
-func (ss *SubscriptionStore) AddSubscriptionToMember(subscription subscriptions.Subscription, member members.Member) (*subscriptions.Subscription, error) {
+func (ss *SubscriptionStore) AddSubscriptionToMember(subscription subscriptions.Subscription, member entities.Member) (*subscriptions.Subscription, error) {
 	memberSubscription := subscriptions.MemberSubscription{
 		Code:       subscription.Code,
 		DateBought: time.Now(),
@@ -38,7 +38,7 @@ func (ss *SubscriptionStore) AddSubscriptionToMember(subscription subscriptions.
 	return &subscriptions.Subscription{}, subscriptions.ErrNoSubscriptionWithCodeFound
 }
 
-func (ss *SubscriptionStore) GetAllMemberSubscriptions(member members.Member) []*subscriptions.MemberSubscription {
+func (ss *SubscriptionStore) GetAllMemberSubscriptions(member entities.Member) []*subscriptions.MemberSubscription {
 	memberSubscriptions := []*subscriptions.MemberSubscription{}
 	for i := range ss.membersubscriptions {
 		if ss.membersubscriptions[i].MemberID == member.OnlineID {

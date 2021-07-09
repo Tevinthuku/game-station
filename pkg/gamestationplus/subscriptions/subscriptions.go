@@ -3,7 +3,7 @@ package subscriptions
 import (
 	"time"
 
-	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members"
+	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/entities"
 )
 
 type Duration (string)
@@ -25,7 +25,7 @@ type (
 		Code       SubscriptionCode
 		DateBought time.Time
 		Duration   Duration
-		MemberID   members.OnlineID
+		MemberID   entities.OnlineID
 	}
 	CurrentMemberSubscription struct {
 		ValidUntil time.Time
