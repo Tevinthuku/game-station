@@ -1,14 +1,16 @@
 package members
 
-import "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts"
+import (
+	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
+)
 
 type (
 	Repository interface {
-		AddNewMember(newOnLineID OnlineID, networkSignInID accounts.SignInID) *Member
+		AddNewMember(newOnLineID OnlineID, networkSignInID entities.SignInID) *Member
 	}
 
 	AccountService interface {
-		VerifyUserWithSignInIDExists(signInID accounts.SignInID) error
+		VerifyUserWithSignInIDExists(signInID entities.SignInID) error
 	}
 
 	Service struct {
@@ -24,7 +26,7 @@ func NewService(memberRepo Repository, accountsService AccountService) *Service 
 	}
 }
 
-func (s *Service) JoinToPlayStationPlus(newOnLineID OnlineID, networkSignInID accounts.SignInID) (*Member, error) {
+func (s *Service) JoinToPlayStationPlus(newOnLineID OnlineID, networkSignInID entities.SignInID) (*Member, error) {
 	err := s.accountService.VerifyUserWithSignInIDExists(networkSignInID)
 	if err != nil {
 		return &Member{}, err
