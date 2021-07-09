@@ -1,7 +1,7 @@
 package subscriptions
 
 import (
-	memberentities "github.com/Tevinthuku/game-station/pkg/gamestationplus/members/entities"
+	memberdomain "github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions/entities"
 	"github.com/pkg/errors"
 )
@@ -12,8 +12,8 @@ var (
 
 type (
 	Repository interface {
-		AddSubscriptionToMember(subscription entities.Subscription, member memberentities.Member) (*entities.Subscription, error)
-		GetAllMemberSubscriptions(member memberentities.Member) []*entities.MemberSubscription
+		AddSubscriptionToMember(subscription entities.Subscription, member memberdomain.Member) (*entities.Subscription, error)
+		GetAllMemberSubscriptions(member memberdomain.Member) []*entities.MemberSubscription
 		GetUnUsedSubscriptionFromCode(code entities.SubscriptionCode) (*entities.Subscription, error)
 	}
 

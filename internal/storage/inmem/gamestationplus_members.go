@@ -2,20 +2,19 @@ package inmem
 
 import (
 	networkentities "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
-	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/entities"
-	"github.com/pkg/errors"
+	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
 )
 
 type MembersStorage struct {
-	members []entities.Member
+	members []domain.Member
 }
 
 func NewMembersStore() *MembersStorage {
 	return &MembersStorage{}
 }
 
-func (ms *MembersStorage) AddNewMember(newOnLineID entities.OnlineID, networkSignInID networkentities.SignInID) *entities.Member {
-	member := entities.Member{
+func (ms *MembersStorage) AddNewMember(newOnLineID domain.OnlineID, networkSignInID networkentities.SignInID) *domain.Member {
+	member := domain.Member{
 		OnlineID: newOnLineID,
 		SignInID: networkSignInID,
 	}
@@ -25,20 +24,20 @@ func (ms *MembersStorage) AddNewMember(newOnLineID entities.OnlineID, networkSig
 	return &member
 }
 
-func (ms *MembersStorage) GetMemberByOnlineID(onlineID entities.OnlineID) (*entities.Member, error) {
+func (ms *MembersStorage) GetMemberByOnlineID(onlineID domain.OnlineID) (*domain.Member, error) {
 	for i := range ms.members {
 		if ms.members[i].OnlineID == onlineID {
 			return &ms.members[i], nil
 		}
 	}
-	return &entities.Member{}, errors.New("couldnt find user with onlineID")
+	return &domain.Member{}, domain.ErrMemberWithOnlineIDNotFound
 }
 
-func (ms *MembersStorage) GetMemberByNetworkSignInID(signInID networkentities.SignInID) (*entities.Member, error) {
+func (ms *MembersStorage) GetMemberByNetworkSignInID(signInID networkentities.SignInID) (*domain.Member, error) {
 	for i := range ms.members {
 		if ms.members[i].SignInID == signInID {
 			return &ms.members[i], nil
 		}
 	}
-	return &entities.Member{}, errors.New("couldnt find user with signInID")
+	return &domain.Member{}, domain.ErrMemberWithSignInIDNotFound
 }
