@@ -38,7 +38,7 @@ func (ss *SubscriptionStore) AddSubscriptionToMember(subscription domain.Subscri
 	return &domain.Subscription{}, domain.ErrNoSubscriptionWithCodeFound
 }
 
-func (ss *SubscriptionStore) GetAllMemberSubscriptions(member memberdomain.Member) []*domain.MemberSubscription {
+func (ss *SubscriptionStore) GetAllMemberSubscriptions(member *memberdomain.Member) []*domain.MemberSubscription {
 	memberSubscriptions := []*domain.MemberSubscription{}
 	for i := range ss.membersubscriptions {
 		if ss.membersubscriptions[i].MemberID == member.OnlineID {

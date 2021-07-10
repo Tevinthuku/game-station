@@ -8,6 +8,7 @@ import (
 	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts"
 	networkDomain "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
+	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions"
 
 	. "github.com/smartystreets/goconvey/convey"
 )
@@ -17,7 +18,9 @@ func TestMemberService(t *testing.T) {
 	memberRepo := inmem.NewMembersStore()
 	accountsRepo := inmem.NewAccountsStore()
 	accountsService := accounts.NewService(accountsRepo)
-	service := NewService(memberRepo, accountsService)
+	plusSubscriptionRepo := inmem.NewSubscriptionsStore()
+	subscriptionService := subscriptions.NewService(plusSubscriptionRepo)
+	service := NewService(memberRepo, accountsService, subscriptionService)
 	acc1 := networkDomain.Account{
 		SignInID:    networkDomain.SignInID("test@gamer.com"),
 		UserName:    "testgamer",
