@@ -23,7 +23,7 @@ func NewSubscriptionsStore() *SubscriptionStore {
 	}
 }
 
-func (ss *SubscriptionStore) AddSubscriptionToMember(subscription domain.Subscription, member memberdomain.Member) (*domain.Subscription, error) {
+func (ss *SubscriptionStore) AddSubscriptionToMember(subscription *domain.Subscription, member *memberdomain.Member) {
 	memberSubscription := domain.MemberSubscription{
 		Code:       subscription.Code,
 		DateBought: time.Now(),
@@ -31,14 +31,12 @@ func (ss *SubscriptionStore) AddSubscriptionToMember(subscription domain.Subscri
 	}
 
 	for i := range ss.allSubscriptions {
-		if ss.allSubscriptions[i].isAvailable && ss.allSubscriptions[i].Code == subscription.Code {
-			ss.membersubscriptions = append(ss.membersubscriptions, memberSubscription)
+		if ss.allSubscriptions[i].Code == subscription.Code {
 			ss.allSubscriptions[i].isAvailable = false
-			return &subscription, nil
 		}
 	}
+	ss.membersubscriptions = append(ss.membersubscriptions, memberSubscription)
 
-	return &domain.Subscription{}, domain.ErrNoSubscriptionWithCodeFound
 }
 
 func (ss *SubscriptionStore) GetAllMemberSubscriptions(member *memberdomain.Member) []*domain.MemberSubscription {

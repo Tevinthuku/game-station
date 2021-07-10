@@ -7,7 +7,7 @@ import (
 
 type (
 	Repository interface {
-		AddSubscriptionToMember(subscription domain.Subscription, member memberdomain.Member) (*domain.Subscription, error)
+		AddSubscriptionToMember(subscription *domain.Subscription, member *memberdomain.Member)
 		GetAllMemberSubscriptions(member *memberdomain.Member) []*domain.MemberSubscription
 		GetUnUsedSubscriptionFromCode(code domain.SubscriptionCode) (*domain.Subscription, error)
 	}
@@ -23,8 +23,8 @@ func NewService(subscriptionRepo Repository) *Service {
 	}
 }
 
-func (ss *Service) AddSubscriptionToMember(subscription domain.Subscription, member memberdomain.Member) (*domain.Subscription, error) {
-	return ss.subscriptionRepo.AddSubscriptionToMember(subscription, member)
+func (ss *Service) AddSubscriptionToMember(subscription *domain.Subscription, member *memberdomain.Member) {
+	ss.subscriptionRepo.AddSubscriptionToMember(subscription, member)
 }
 
 func (ss *Service) GetUnUsedSubscriptionFromCode(code domain.SubscriptionCode) (*domain.Subscription, error) {
@@ -53,4 +53,8 @@ func (ss *Service) GetCurrentMemberSubscription(member *memberdomain.Member) (*d
 		return &domain.CurrentMemberSubscription{}, domain.ErrCurrentSubscriptionIsExpired
 	}
 	return &currentMemberSubscription, nil
+}
+
+func (ss *Service) VerifySubscriptionCodeIsValid(code domain.SubscriptionCode) (*domain.Subscription, error) {
+	return ss.subscriptionRepo.GetUnUsedSubscriptionFromCode(code)
 }

@@ -19,6 +19,8 @@ type (
 
 	SubscriptionService interface {
 		GetCurrentMemberSubscription(member *domain.Member) (*subscriptionDomain.CurrentMemberSubscription, error)
+		VerifySubscriptionCodeIsValid(code subscriptionDomain.SubscriptionCode) (*subscriptionDomain.Subscription, error)
+		AddSubscriptionToMember(subscription *subscriptionDomain.Subscription, member *domain.Member)
 	}
 
 	Service struct {
@@ -36,8 +38,12 @@ func NewService(memberRepo Repository, accountsService AccountService, subscript
 	}
 }
 
-func (s *Service) JoinToPlayStationPlus(newOnLineID domain.OnlineID, networkSignInID networkDomain.SignInID) (*domain.Member, error) {
-	_, err := s.accountService.VerifyUserWithSignInIDExists(networkSignInID)
+func (s *Service) JoinToPlayStationPlus(newOnLineID domain.OnlineID, networkSignInID networkDomain.SignInID, subscriptionCode subscriptionDomain.SubscriptionCode) (*domain.Member, error) {
+	subscription, err := s.subscriptionService.VerifySubscriptionCodeIsValid(subscriptionCode)
+	if err != nil {
+		return &domain.Member{}, err
+	}
+	_, err = s.accountService.VerifyUserWithSignInIDExists(networkSignInID)
 	if err != nil {
 		return &domain.Member{}, err
 	}
@@ -49,7 +55,12 @@ func (s *Service) JoinToPlayStationPlus(newOnLineID domain.OnlineID, networkSign
 	if err != nil {
 		return &domain.Member{}, err
 	}
-	return s.memberRepo.AddNewMember(newOnLineID, networkSignInID), nil
+	member := s.memberRepo.AddNewMember(newOnLineID, networkSignInID)
+
+	s.subscriptionService.AddSubscriptionToMember(subscription, member)
+
+	return member, nil
+
 }
 
 func (s *Service) verifyOnlineIDIsAvailable(onlineID domain.OnlineID) error {
