@@ -7,17 +7,20 @@ import (
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions/domain"
 )
 
-type storedAvailableSubscription struct {
+type StoredAvailableSubscription struct {
 	domain.Subscription
 	isAvailable bool
 }
+
 type SubscriptionStore struct {
 	membersubscriptions []domain.MemberSubscription
-	allSubscriptions    []storedAvailableSubscription
+	allSubscriptions    []StoredAvailableSubscription
 }
 
 func NewSubscriptionsStore() *SubscriptionStore {
-	return &SubscriptionStore{}
+	return &SubscriptionStore{
+		allSubscriptions: PopulateSubscriptions(),
+	}
 }
 
 func (ss *SubscriptionStore) AddSubscriptionToMember(subscription domain.Subscription, member memberdomain.Member) (*domain.Subscription, error) {
