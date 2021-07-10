@@ -3,6 +3,7 @@ package members
 import (
 	networkDomain "github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/members/domain"
+	subscriptionDomain "github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions/domain"
 )
 
 type (
@@ -16,16 +17,22 @@ type (
 		VerifyUserWithSignInIDExists(signInID networkDomain.SignInID) (*networkDomain.Account, error)
 	}
 
+	SubscriptionService interface {
+		GetCurrentMemberSubscription(member *domain.Member) (*subscriptionDomain.CurrentMemberSubscription, error)
+	}
+
 	Service struct {
-		memberRepo     Repository
-		accountService AccountService
+		memberRepo          Repository
+		accountService      AccountService
+		subscriptionService SubscriptionService
 	}
 )
 
-func NewService(memberRepo Repository, accountsService AccountService) *Service {
+func NewService(memberRepo Repository, accountsService AccountService, subscriptionService SubscriptionService) *Service {
 	return &Service{
-		memberRepo:     memberRepo,
-		accountService: accountsService,
+		memberRepo:          memberRepo,
+		accountService:      accountsService,
+		subscriptionService: subscriptionService,
 	}
 }
 
@@ -59,4 +66,12 @@ func (s *Service) verifyNetworkSignInIDIsAvailable(networkSignInID networkDomain
 		return nil
 	}
 	return domain.ErrSignInIDIsTaken
+}
+
+func (s *Service) GetCurrentMemberSubscription(onlineID domain.OnlineID) (*subscriptionDomain.CurrentMemberSubscription, error) {
+	member, err := s.memberRepo.GetMemberByOnlineID(onlineID)
+	if err != nil {
+		return &subscriptionDomain.CurrentMemberSubscription{}, err
+	}
+	return s.subscriptionService.GetCurrentMemberSubscription(member)
 }
