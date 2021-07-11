@@ -21,7 +21,6 @@ Ill focus on the business_rules/use cases of the product & then dive into how th
 More to come
 
 - [gamestationstore] - This will house a mock of the games provided on the Playstation store.
-- Unit & integration tests - Clean architecture enables easy testing, so I'll work on having the various parts of the app tested.
 - Integrate a web-framework - This will enable us to expose the app to users via REST.
 
 https://github.com/golang/go/wiki/CodeReviewComments#go-code-review-comments
