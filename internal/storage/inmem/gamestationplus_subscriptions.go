@@ -28,6 +28,7 @@ func (ss *SubscriptionStore) AddSubscriptionToMember(subscription *domain.Subscr
 		Code:       subscription.Code,
 		DateBought: time.Now(),
 		Duration:   subscription.Duration,
+		MemberID:   member.OnlineID,
 	}
 
 	for i := range ss.allSubscriptions {
