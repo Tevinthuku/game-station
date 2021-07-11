@@ -36,6 +36,7 @@ func TestMemberService(t *testing.T) {
 		UserName:    "testgamer",
 		DateOfBirth: time.Date(1995, 12, 9, 0, 0, 0, 0, time.UTC), // TODO: Create a better abstraction for this
 	}
+	
 	onlineID := domain.OnlineID("gamer")
 	_, _ = accountsService.CreateAccount(acc1)
 	Convey("Given an OnlineID", t, func() {
