@@ -26,7 +26,7 @@ func NewSubscriptionsStore() *SubscriptionStore {
 func (ss *SubscriptionStore) AddSubscriptionToMember(subscription *domain.Subscription, member *memberdomain.Member) {
 	memberSubscription := domain.MemberSubscription{
 		Code:       subscription.Code,
-		DateBought: time.Now(),
+		DateBought: time.Now().UTC(),
 		Duration:   subscription.Duration,
 		MemberID:   member.OnlineID,
 	}

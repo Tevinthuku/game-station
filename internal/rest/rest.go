@@ -1,4 +1,4 @@
-package main
+package rest
 
 import (
 	"github.com/Tevinthuku/game-station/internal/storage/inmem"
@@ -7,13 +7,14 @@ import (
 	"github.com/Tevinthuku/game-station/pkg/gamestationplus/subscriptions"
 )
 
-func main() {
+// TODO: Will use a http library to expose the required business rules via rest.
+func StartServer() {
 	accountsRepo := inmem.NewAccountsStore()
-	plusMemberRepo := inmem.NewMembersStore()
+	plusMembersRepo := inmem.NewMembersStore()
 	plusSubscriptionRepo := inmem.NewSubscriptionsStore()
 
 	subscriptionService := subscriptions.NewService(plusSubscriptionRepo)
 	accountsService := accounts.NewService(accountsRepo)
-	_ = members.NewService(plusMemberRepo, accountsService, subscriptionService)
+	_ = members.NewService(plusMembersRepo, accountsService, subscriptionService)
 
 }
