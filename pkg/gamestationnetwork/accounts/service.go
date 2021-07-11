@@ -1,21 +1,14 @@
 package accounts
 
 import (
-	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
-	"github.com/pkg/errors"
+	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
 )
 
-var (
-	ErrSignInIdIsTaken = errors.New("the SignInID is already in use")
-	ErrUserNameIsTaken = errors.New("the username is already in use")
-
-	ErrNoAccountWithSignInIDFound = errors.New("no account found with specified signInID")
-)
 
 type (
 	Repository interface {
-		AddNewAccount(accoount entities.Account) (*entities.Account, error)
-		GetAccountBySignInId(signInID entities.SignInID) (*entities.Account, error)
+		AddNewAccount(accoount domain.Account) (*domain.Account, error)
+		GetAccountBySignInId(signInID domain.SignInID) (*domain.Account, error)
 	}
 
 	Service struct {
@@ -29,10 +22,10 @@ func NewService(accountRepo Repository) *Service {
 	}
 }
 
-func (s *Service) CreateAccount(account entities.Account) (*entities.Account, error) {
+func (s *Service) CreateAccount(account domain.Account) (*domain.Account, error) {
 	return s.accountRepo.AddNewAccount(account)
 }
 
-func (s *Service) VerifyUserWithSignInIDExists(signInID entities.SignInID) (*entities.Account, error) {
+func (s *Service) VerifyUserWithSignInIDExists(signInID domain.SignInID) (*domain.Account, error) {
 	return s.accountRepo.GetAccountBySignInId(signInID)
 }

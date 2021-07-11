@@ -12,9 +12,8 @@ func main() {
 	plusMemberRepo := inmem.NewMembersStore()
 	plusSubscriptionRepo := inmem.NewSubscriptionsStore()
 
+	subscriptionService := subscriptions.NewService(plusSubscriptionRepo)
 	accountsService := accounts.NewService(accountsRepo)
-	_ = members.NewService(plusMemberRepo, accountsService)
-
-	_ = subscriptions.NewService(plusSubscriptionRepo)
+	_ = members.NewService(plusMemberRepo, accountsService, subscriptionService)
 
 }

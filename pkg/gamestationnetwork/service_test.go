@@ -6,15 +6,15 @@ import (
 
 	"github.com/Tevinthuku/game-station/internal/storage/inmem"
 	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts"
-	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/entities"
+	"github.com/Tevinthuku/game-station/pkg/gamestationnetwork/accounts/domain"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestAccountsService(t *testing.T) {
 	accountsRepo := inmem.NewAccountsStore()
 	service := accounts.NewService(accountsRepo)
-	acc1 := entities.Account{
-		SignInID:    entities.SignInID("test@gamer.com"),
+	acc1 := domain.Account{
+		SignInID:    domain.SignInID("test@gamer.com"),
 		UserName:    "testgamer",
 		DateOfBirth: time.Date(1995, 12, 9, 0, 0, 0, 0, time.UTC), // TODO: Create a better abstraction for this
 	}
@@ -36,7 +36,7 @@ func TestAccountsService(t *testing.T) {
 			So(acc.SignInID, ShouldEqual, acc1.SignInID)
 		})
 		Convey("I should get an error if no account exists with the SignInID", func() {
-			_, err := service.VerifyUserWithSignInIDExists(entities.SignInID("idont@exist.com"))
+			_, err := service.VerifyUserWithSignInIDExists(domain.SignInID("idont@exist.com"))
 			So(err, ShouldNotBeNil)
 		})
 	})
