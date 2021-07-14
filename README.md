@@ -12,7 +12,7 @@ Ill focus on the business_rules/use cases of the product & then dive into how th
 
 /pkg/gamestationnetwork
 
-- This workspace/directory holds the user account's service. Playstation offers something similar, but in a broader sense. In that a Sony account which can be used for other Sony products can also be used in the Playstation network context. Since this is a small repo focused only on only Playstation like services, I chose to have gamestation_network house the user accounts.
+- This workspace/directory holds the user account's service. Playstation offers something similar, but in a broader sense. In that a Sony account is used for other  Sony products can also be used in the Playstation network context. Since this is a small repo focused only on only Playstation like services, I chose to have gamestation_network house the user accounts.
 
 /pkg/gamestationplus
 
